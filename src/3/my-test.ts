@@ -13,9 +13,13 @@ export class MyTest {
   }
 
   save(): SavedNumber {
-    const result = this.dbConnection.save(this.value);
+    try {
+      const result = this.dbConnection.save(this.value);
+      return result;
+    } catch (error) {
+      throw new Error("The value could not be inserted!");
+    }
 
-    return result;
   }
 
   constructor(value: number, dbConnection: DataBaseConnection) {

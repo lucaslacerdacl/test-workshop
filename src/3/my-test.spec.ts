@@ -54,5 +54,19 @@ describe('My Test Class', () => {
       expect(result).toEqual(saveResult)
       expect(saveMock).toHaveBeenCalledWith(value);
     });
+
+    it('Should throw exception when save a number', () => {
+      const saveMock = jest.spyOn(dbConnection, 'save')
+        .mockImplementation(() => {
+          throw new Error("Value already exist");
+        });
+
+        try {
+          userService.save();
+        } catch (error) {
+          expect(error.message).toBe("The value could not be inserted!");
+        }
+
+    });
   });
 });
